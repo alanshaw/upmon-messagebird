@@ -4,7 +4,7 @@ var request = require('request')
 
 var url = 'https://rest.messagebird.com/messages'
 
-function sendFailSMS (accessKey, originator, recipients, lastPing, ping) {
+function sendSMS (type, accessKey, originator, recipients, lastPing, ping) {
   request.post({
     url: url,
     headers: {
@@ -13,28 +13,15 @@ function sendFailSMS (accessKey, originator, recipients, lastPing, ping) {
     form: {
       originator: originator,
       recipients: recipients,
-      body: 'FAIL ' + ping.url + ' (' + ping.status + ') at ' + new Date(ping.timestamp)
+      body: type + ' ' + ping.url + ' (' + ping.status + ') at ' + new Date(ping.timestamp)
     }
   }, function (er, httpRes, body) {
-    if (er) console.error('Failed to send fail sms', opts, er, info)
+    if (er) console.error('Failed to send ' + type + ' sms', opts, er, info)
   })
 }
 
-function sendRecoverSMS (accessKey, originator, recipients, lastPing, ping) {
-  request.post({
-    url: url,
-    headers: {
-      Authorization: 'AccessKey ' + accessKey
-    },
-    form: {
-      originator: originator,
-      recipients: recipients,
-      body: 'RECOVER ' + ping.url + ' (' + ping.status + ') at ' + new Date(ping.timestamp)
-    }
-  }, function (er, httpRes, body) {
-    if (er) console.error('Failed to send recover sms', opts, er, info)
-  })
-}
+var sendFailSMS = sendSMS.bind(null, 'FAIL')
+var sendRecoverSMS = sendSMS.bind(null, 'RECOVER')
 
 module.exports = function (opts) {
   opts = xtend(config, opts)
