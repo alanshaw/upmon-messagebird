@@ -1,0 +1,23 @@
+{
+  "name": "upmon-messagebird",
+  "version": "0.0.0",
+  "description": "Send an SMS message via the MessageBird API when upmon detects a failure",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "upmon",
+    "messagebird",
+    "txt",
+    "message"
+  ],
+  "author": "Alan Shaw",
+  "license": "ISC",
+  "dependencies": {
+    "rc": "^0.5.4",
+    "request": "^2.51.0",
+    "through2": "^0.6.3",
+    "xtend": "^4.0.0"
+  }
+}
