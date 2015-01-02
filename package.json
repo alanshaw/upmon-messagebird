@@ -1,6 +1,6 @@
 {
   "name": "upmon-sms",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Send an SMS message when upmon detects a failure",
   "main": "index.js",
   "scripts": {
