@@ -20,27 +20,19 @@ function sendSMS (type, url, accessKey, originator, recipients, lastPing, ping) 
 var sendFailSMS = sendSMS.bind(null, 'FAIL')
 var sendRecoverSMS = sendSMS.bind(null, 'RECOVER')
 
-function isString (str) {
-  return Object.prototype.toString.call(str) == '[object String]'
-}
-
 module.exports = function (opts) {
   opts = opts || {}
   opts.url = opts.url || 'https://rest.messagebird.com/messages'
 
   var lastPings = {}
 
-  return through.obj(function (chunk, enc, cb) {
+  return through(function (chunk, enc, cb) {
     var ping
 
-    if (Buffer.isBuffer(chunk) || isString(chunk)) {
-      try {
-        ping = JSON.parse(chunk)
-      } catch (er) {
-        return cb(er)
-      }
-    } else {
-      ping = chunk
+    try {
+      ping = JSON.parse(chunk)
+    } catch (er) {
+      return cb(er)
     }
 
     var lastPing = lastPings[ping.url]
