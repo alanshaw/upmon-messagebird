@@ -1,9 +1,7 @@
 var through = require('through2')
 var request = require('request')
 
-var url = 'https://rest.messagebird.com/messages'
-
-function sendSMS (type, accessKey, originator, recipients, lastPing, ping) {
+function sendSMS (type, url, accessKey, originator, recipients, lastPing, ping) {
   request.post({
     url: url,
     headers: {
@@ -14,8 +12,8 @@ function sendSMS (type, accessKey, originator, recipients, lastPing, ping) {
       recipients: recipients,
       body: type + ' ' + ping.url + ' (' + ping.status + ') at ' + new Date(ping.timestamp)
     }
-  }, function (er, httpRes, body) {
-    if (er) console.error('Failed to send ' + type + ' sms', opts, er, info)
+  }, function (er, res, body) {
+    if (er) console.error('Failed to send ' + type + ' sms', er)
   })
 }
 
@@ -28,6 +26,7 @@ function isString (str) {
 
 module.exports = function (opts) {
   opts = opts || {}
+  opts.url = opts.url || 'https://rest.messagebird.com/messages'
 
   var lastPings = {}
 
@@ -48,9 +47,9 @@ module.exports = function (opts) {
 
     if (lastPing) {
       if (lastPing.status == 200 && ping.status != 200) {
-        sendFailSMS(opts.accessKey, opts.originator, opts.recipients, lastPing, ping)
+        sendFailSMS(opts.url, opts.accessKey, opts.originator, opts.recipients, lastPing, ping)
       } else if (lastPing.status != 200 && ping.status == 200) {
-        sendRecoverSMS(opts.accessKey, opts.originator, opts.recipients, lastPing, ping)
+        sendRecoverSMS(opts.url, opts.accessKey, opts.originator, opts.recipients, lastPing, ping)
       }
     }
 

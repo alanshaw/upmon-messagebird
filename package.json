@@ -4,7 +4,8 @@
   "description": "Send an SMS message when upmon detects a failure",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "istanbul cover node_modules/.bin/tape test/*.js",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "keywords": [
     "upmon",
@@ -29,7 +30,13 @@
   "bin": {
     "upmon-sms": "bin/upmon-sms.js"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "body": "^4.5.0",
+    "coveralls": "^2.11.2",
+    "istanbul": "^0.3.5",
+    "tape": "^3.0.3",
+    "upmon": "^0.5.1"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/alanshaw/upmon-sms.git"
