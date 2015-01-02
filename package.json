@@ -22,8 +22,10 @@
   "license": "ISC",
   "dependencies": {
     "minimist": "^1.1.0",
+    "ndjson": "^1.3.0",
     "rc": "^0.5.4",
     "request": "^2.51.0",
+    "stream-combiner2": "^1.0.2",
     "through2": "^0.6.3",
     "xtend": "^4.0.0"
   },
@@ -35,7 +37,7 @@
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.5",
     "tape": "^3.0.3",
-    "upmon": "^0.5.1"
+    "upmon": "^0.9.0"
   },
   "repository": {
     "type": "git",

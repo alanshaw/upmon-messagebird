@@ -1,8 +1,8 @@
 var http = require('http')
 var test = require('tape')
 var formBody = require('body/form')
-var ping = require('upmon/ping')
-var messageBird = require('../messagebird')
+var ping = require('upmon')
+var sms = require('../')
 
 test('Fail and recover', function (t) {
   t.plan(10)
@@ -47,11 +47,13 @@ test('Fail and recover', function (t) {
     interval: 1000,
     services: ['http://localhost:1337']
   })
-  var txter = messageBird({
-    url: 'http://localhost:1338',
-    accessKey: accessKey,
-    originator: originator,
-    recipients: recipients
+  var txter = sms({
+    messagebird: {
+      url: 'http://localhost:1338',
+      accessKey: accessKey,
+      originator: originator,
+      recipients: recipients
+    }
   })
 
   pinger.pipe(txter)

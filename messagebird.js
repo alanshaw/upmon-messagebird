@@ -26,15 +26,7 @@ module.exports = function (opts) {
 
   var lastPings = {}
 
-  return through(function (chunk, enc, cb) {
-    var ping
-
-    try {
-      ping = JSON.parse(chunk)
-    } catch (er) {
-      return cb(er)
-    }
-
+  return through.obj(function (ping, enc, cb) {
     var lastPing = lastPings[ping.url]
 
     if (lastPing) {
@@ -47,7 +39,7 @@ module.exports = function (opts) {
 
     lastPings[ping.url] = ping
 
-    this.push(chunk)
+    this.push(ping)
     cb()
   })
 }
