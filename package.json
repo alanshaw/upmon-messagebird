@@ -27,7 +27,7 @@
     "xtend": "^4.0.0"
   },
   "bin": {
-    "upmon-mail": "bin/upmon-mail.js"
+    "upmon-sms": "bin/upmon-sms.js"
   },
   "devDependencies": {},
   "repository": {
