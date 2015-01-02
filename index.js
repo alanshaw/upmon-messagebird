@@ -1,6 +1,5 @@
 var xtend = require('xtend')
 var config = require('rc')('upmon')
-var through = require('through')
 var messageBird = require('./messagebird')
 
 config.sms = config.sms || {}
