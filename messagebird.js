@@ -22,27 +22,35 @@ function sendSMS (type, accessKey, originator, recipients, lastPing, ping) {
 var sendFailSMS = sendSMS.bind(null, 'FAIL')
 var sendRecoverSMS = sendSMS.bind(null, 'RECOVER')
 
+function isString (str) {
+  return Object.prototype.toString.call(str) == '[object String]'
+}
+
 module.exports = function (opts) {
   opts = opts || {}
 
   var lastPings = {}
 
-  return through(function (chunk, enc, cb) {
+  return through.obj(function (chunk, enc, cb) {
     var ping
 
-    try {
-      ping = JSON.parse(chunk)
-    } catch (er) {
-      return cb(er)
+    if (Buffer.isBuffer(chunk) || isString(chunk)) {
+      try {
+        ping = JSON.parse(chunk)
+      } catch (er) {
+        return cb(er)
+      }
+    } else {
+      ping = chunk
     }
 
     var lastPing = lastPings[ping.url]
 
     if (lastPing) {
       if (lastPing.status == 200 && ping.status != 200) {
-        this.sendFailSMS(opts.accessKey, opts.originator, opts.recipients, lastPing, ping)
+        sendFailSMS(opts.accessKey, opts.originator, opts.recipients, lastPing, ping)
       } else if (lastPing.status != 200 && ping.status == 200) {
-        this.sendRecoverSMS(opts.accessKey, opts.originator, opts.recipients, lastPing, ping)
+        sendRecoverSMS(opts.accessKey, opts.originator, opts.recipients, lastPing, ping)
       }
     }
 

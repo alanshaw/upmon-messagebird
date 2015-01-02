@@ -3,11 +3,13 @@ var config = require('rc')('upmon')
 var through = require('through')
 var messageBird = require('./messagebird')
 
+config.sms = config.sms || {}
+
 module.exports = function (opts) {
   opts = opts || {}
 
-  if (config.messagebird || opts.messagebird) {
-    return messageBird(xtend(config.messagebird, opts.messagebird))
+  if (config.sms.messagebird || opts.messagebird) {
+    return messageBird(xtend(config.sms.messagebird, opts.messagebird))
   }
 
   throw new Error('Missing SMS config')

@@ -1,8 +1,35 @@
-# upmon-sms
+# upmon-sms [![Build Status](https://travis-ci.org/alanshaw/upmon-sms.svg?branch=master)](https://travis-ci.org/alanshaw/upmon-sms) [![Dependency Status](https://david-dm.org/alanshaw/upmon-sms.svg?style=flat)](https://david-dm.org/alanshaw/upmon-sms) [![Coverage Status](https://img.shields.io/coveralls/alanshaw/upmon-sms/master.svg?style=flat)](https://coveralls.io/r/alanshaw/upmon-sms)
 
-Send an SMS message when upmon detects a failure.
+Send an SMS message when [upmon](https://github.com/alanshaw/upmon) detects a failure.
 
-## Usage
+## Getting started
 
-1. Configure
-2. `upmon | upmon-sms`
+1. `npm install -g upmon upmon-sms`
+2. Create a new `$HOME/.upmonrc` file and add config:
+
+    ```js
+    {
+      "ping": {
+        // Time in ms between pings
+        "interval": 5000,
+        // URL's of services to ping
+        "services": ["http://localhost:8000/"]
+      },
+      "sms": {
+        // SMS provider config
+        "messagebird": {
+          "accessKey": "live_hy6ggbrRf4Bvfe48GGip8MtJM",
+          "originator": "447000000000",
+          "recipients": "447000000000"
+        }
+      }
+    }
+    ```
+
+3. `upmon | upmon-sms`
+
+## Supported providers
+
+* MessageBird ([messagebird.com](https://www.messagebird.com))
+
+Please PR and add more!

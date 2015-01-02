@@ -8,6 +8,10 @@
   },
   "keywords": [
     "upmon",
+    "ping",
+    "service",
+    "health",
+    "monitoring",
     "messagebird",
     "sms",
     "txt",
@@ -16,9 +20,22 @@
   "author": "Alan Shaw",
   "license": "ISC",
   "dependencies": {
+    "minimist": "^1.1.0",
     "rc": "^0.5.4",
     "request": "^2.51.0",
     "through2": "^0.6.3",
     "xtend": "^4.0.0"
-  }
+  },
+  "bin": {
+    "upmon-mail": "bin/upmon-mail.js"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alanshaw/upmon-sms.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alanshaw/upmon-sms/issues"
+  },
+  "homepage": "https://github.com/alanshaw/upmon-sms"
 }
