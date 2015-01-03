@@ -33,3 +33,22 @@ Send an SMS message when [upmon](https://github.com/alanshaw/upmon) detects a fa
 * MessageBird ([messagebird.com](https://www.messagebird.com))
 
 Please PR and add more!
+
+## Build your own monitor
+
+Want to run upmon from [boss](https://www.npmjs.com/package/process-boss) or [pm2](https://www.npmjs.com/package/pm2)?
+
+Create a new project, add a `.upmonrc` config file, install the upmon modules you need, and pipe them together!
+
+**monitor.js**
+```js
+var upmon = require('upmon')
+var sms = require('upmon-sms')
+var mail = require('upmon-mail')
+
+upmon().pipe(sms()).pipe(mail()).pipe(process.stdout)
+```
+
+```sh
+pm2 start monitor.js
+```
